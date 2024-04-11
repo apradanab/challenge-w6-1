@@ -1,1 +1,11 @@
-{}
+{
+  "pets": [
+    {"id":"1",
+    "name":"Greta",
+    "species":"Cocker Spaniel",
+    "owner":"Pepe",
+    "isAdopted":false
+  }
+
+  ]
+}

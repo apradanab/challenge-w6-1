@@ -1,13 +1,24 @@
-import { Component, Input } from '@angular/core';
-import { Pets } from '../../core/model';
+import { Component, input } from '@angular/core';
+import { Pet } from '../../core/model';
 
 @Component({
   selector: 'isdi-pets',
   standalone: true,
   imports: [],
-  templateUrl: './pets.component.html',
-  styleUrl: './pets.component.css'
+  template: `
+  <li>
+  <p>Name: {{ pet().name }}</p>
+</li>
+<li>
+  <p>Owner: {{ pet().owner }}</p>
+</li>
+<li>
+  <p>Adopted: {{ pet().isAdopted ? "yes" : "no" }}</p>
+</li>
+`,
+  styles: `
+  `
 })
 export class PetsComponent {
- @Input({ required: true }) pet: Pets = {} as Pets;
+ pet = input<Pet>({} as Pet);
 }
