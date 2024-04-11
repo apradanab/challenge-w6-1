@@ -11,5 +11,5 @@ import { PetsComponent } from './feature/pets/pets.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'signals';
+  title = 'signals-pets';
 }

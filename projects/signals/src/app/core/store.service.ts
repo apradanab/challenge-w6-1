@@ -1,28 +1,40 @@
 import { Injectable, signal } from '@angular/core';
+import { Pet } from './model';
 import { RepoService } from './repo.service';
-import { Pets } from './model';
+
+//type addPetDTO = Omit<Pet, 'id' | 'isAdopted'>;
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
-  private pets = signal<Pets[]>([]);
-  constructor(private repo: RepoService) {
-    this.loadPets();
-  }
-  loadPets() {
-    this.repo.getPets().subscribe({
-      next: (data) => {
-        this.pets.set(data);
-        console.log('pasa por el store');
-        console.log(this.pets());
-      },
-      error: (error) => {
-        console.log(error.message);
-      },
-    });
-  }
-  sendPets() {
-    return this.pets;
-  }
+private petState = signal<Pet[]>([])
+public petState$= this.petState.asReadonly()
+
+constructor( private repo: RepoService) {}
+
+loadPets() {
+  this.repo.getPets().subscribe({
+    next: (data) => { this.petState.set(data)},
+    error: (error) => {console.error(error)}
+  })
+}
+addPet() {
+  return this.petState()
+}
+// addPet(
+//   //data: Omit<Pet, 'id' | 'isAdopted'>
+//   //data:Partial<Pet>
+//   //data: Pick<Pet, 'name' | 'species' | 'imgUrl' | 'owner'>
+//   {name, species, owner, imgUrl}: addPetDTO):void {
+// const newPet: Pet = {
+//   id: crypto.randomUUID(),
+//   imgUrl: imgUrl,
+//   name: name,
+//   species: species,
+//   owner: owner,
+//   isAdopted: false,
+// };
+// this.petState.update((pets) => [...pets, newPet]);
+// }
 }
